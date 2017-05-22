@@ -27,7 +27,7 @@ public abstract class Constants {
     /**
      * App Name
      */
-    public static final String appName = "Health Network" ;
+    public static final String appName = "FTP" ;
     /**
      * A font name that called fantastic font
      */
@@ -87,5 +87,5 @@ public abstract class Constants {
     /**
      * Margins for titke bar
      */
-    public static final int margin = 10 ;
+    public static final int margin = 2 ;
 }

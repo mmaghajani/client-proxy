@@ -18,8 +18,8 @@ import java.awt.event.ActionListener;
  */
 public class StartPage extends JFrame {
 
-    private int width = GraphicHandler.getInstance().getWidthScreen() / 2;
-    private int height = GraphicHandler.getInstance().getHeightScreen()*2 / 3;
+    private int width = GraphicHandler.getInstance().getWidthScreen()*2 / 3;
+    private int height = GraphicHandler.getInstance().getHeightScreen()*3 / 4;
     private MyLabel titleLbl;
     private MyTextField idField;
     private MyTextField passwordField;
@@ -29,18 +29,18 @@ public class StartPage extends JFrame {
     /**
      * Magnitude of imaginary layouts
      */
-    private final int heightOfTitleBar = height / 7;
+    private final int heightOfTitleBar = height / 15;
     private final int widthOfTitleBar = width;
     private final int titleBarX = 0;
-    private final int titleBarY = height / 25;
+    private final int titleBarY = height / 75;
     private final int titleFontSize = 35;
     private final int mainPanelX = 0;
     private final int mainPanelY = heightOfTitleBar;
-    private final int heightOfMainPanel = height * 5 / 7;
+    private final int heightOfMainPanel = height * 9 / 10;
     private final int widthOfMainPanel = width;
     private final int toolBarX = 0;
-    private final int toolBarY = heightOfTitleBar + heightOfMainPanel;
-    private final int heightOfToolBar = height - (heightOfMainPanel + heightOfTitleBar);
+    private final int toolBarY = heightOfTitleBar + heightOfMainPanel * 95/100 ;
+    private final int heightOfToolBar = height - (heightOfMainPanel + heightOfTitleBar)*95/100;
     private final int widthOfToolBar = width;
 
     public StartPage() {
@@ -61,16 +61,17 @@ public class StartPage extends JFrame {
 
     private void setMainPanel() {
         idField = new MyTextField("Command", Constants.buttonJPGPath);
-        idField.setSize(width * 4/ 5, height / 10);
+        idField.setSize(width * 5/ 6, height / 10);
         idField.setLocation(widthOfMainPanel / 2 - idField.getWidth() / 2, mainPanelY + heightOfMainPanel / 14);
 
-        passwordField = new MyTextField("Password", Constants.buttonJPGPath);
-        passwordField.setSize(width * 4 / 5, height / 2);
+        passwordField = new MyTextField("", Constants.buttonJPGPath);
+        passwordField.setEditable(false);
+        passwordField.setSize(width * 5 / 6, height * 3 / 4);
         passwordField.setLocation(widthOfMainPanel / 2 - idField.getWidth() / 2, mainPanelY + heightOfMainPanel / 8);
 
-        signInBtn = new MyButton("sign in", Constants.buttonJPGPath);
-        signInBtn.setSize(passwordField.getWidth() / 2, heightOfMainPanel / 5);
-        signInBtn.setLocation(widthOfMainPanel / 2 - signInBtn.getWidth() / 2, mainPanelY + heightOfMainPanel * 5 / 6);
+        signInBtn = new MyButton("execute", Constants.buttonJPGPath);
+        signInBtn.setSize(passwordField.getWidth() / 5, heightOfMainPanel / 12);
+        signInBtn.setLocation(widthOfMainPanel / 2 - signInBtn.getWidth() / 2, mainPanelY + heightOfMainPanel * 20 / 21);
     }
 
     private void initialize() {

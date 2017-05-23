@@ -26,7 +26,7 @@ public class UserPI {
     private UserPI() {
     }
 
-    public void setConnection(Socket connection){
+    public void setConnection(Socket connection) {
         this.connection = connection;
         try {
             outToServer = new DataOutputStream(
@@ -38,29 +38,29 @@ public class UserPI {
         }
     }
 
-    public void runCommand(String clientSentence){
+    public void runCommand(String clientSentence) {
         try {
 
             String command = clientSentence.split("\\s")[0];
             String reply = "";
             System.out.println(command);
-            switch (command){
-                case "USER" :
+            switch (command) {
+                case "USER":
                     outToServer.writeBytes(clientSentence);
                     reply = inFromServer.readLine();
                     StartPage.getInstance().printToBoard(reply);
                     break;
-                case "PASS" :
+                case "PASS":
                     outToServer.writeBytes(clientSentence);
                     reply = inFromServer.readLine();
                     StartPage.getInstance().printToBoard(reply);
                     break;
-                case "LIST" :
+                case "LIST":
                     outToServer.writeBytes("PORT 6000\n");
                     reply = inFromServer.readLine();
                     String status = reply.split("\\s")[0];
                     System.out.println(status);
-                    if( status.equals("200")){
+                    if (status.equals("200")) {
                         UserDTP DTP = new UserDTP();
                         new Thread(DTP).start();
                         outToServer.writeBytes(clientSentence);
@@ -68,23 +68,23 @@ public class UserPI {
                         System.out.println(reply);
                         StartPage.getInstance().printToBoard(reply);
                         String LISTStatus = reply.split("\\s")[0];
-                        if( LISTStatus.equals("200")){
+                        if (LISTStatus.equals("200")) {
                             String response = DTP.getText();
                             String list = getList(response);
                             StartPage.getInstance().printToBoard("Name of Files : " + "\n" + list);
-                        }else
+                        } else
                             DTP.close();
-                    }else{
+                    } else {
                         StartPage.getInstance().printToBoard(reply);
                     }
                     break;
-                case "RETR" :
+                case "RETR":
                     outToServer.writeBytes("PORT 6000\n");
                     reply = inFromServer.readLine();
                     status = reply.split("\\s")[0];
                     String nameOfFile = clientSentence.split("\\s")[1];
                     System.out.println(status);
-                    if( status.equals("200")){
+                    if (status.equals("200")) {
                         UserDTP DTP = new UserDTP();
                         new Thread(DTP).start();
                         outToServer.writeBytes(clientSentence);
@@ -92,29 +92,37 @@ public class UserPI {
                         System.out.println(reply);
                         StartPage.getInstance().printToBoard(reply);
                         String RETRStatus = reply.split("\\s")[0];
-                        if( RETRStatus.equals("200")){
+                        if (RETRStatus.equals("200")) {
                             DTP.getFile(nameOfFile);
-                        }else
+                        } else
                             DTP.close();
-                    }else{
+                    } else {
                         StartPage.getInstance().printToBoard(reply);
                     }
                     break;
-                case "RMD" :
+                case "RMD":
                     outToServer.writeBytes(clientSentence);
                     reply = inFromServer.readLine();
                     StartPage.getInstance().printToBoard(reply);
                     break;
-                case "DELE" :
+                case "DELE":
                     outToServer.writeBytes(clientSentence);
                     reply = inFromServer.readLine();
                     StartPage.getInstance().printToBoard(reply);
                     break;
-                case "QUIT" :
-                    outToServer.writeBytes(clientSentence);
-                    connection.close();
+                case "QUIT":
+                    if( connection != null ) {
+                        if (!connection.isClosed()) {
+                            outToServer.writeBytes(clientSentence);
+                            connection.close();
+                        }
+                    }
                     break;
                 default:
+                    outToServer.writeBytes(clientSentence);
+                    reply = inFromServer.readLine();
+                    StartPage.getInstance().printToBoard(reply);
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,14 +130,14 @@ public class UserPI {
 
     }
 
-    private String getList(String response){
+    private String getList(String response) {
         String[] entries = response.split("href");
         String names = "";
-        int index = 0 ;
-        for( String s : entries ){
-            if( index >= 6 ){
+        int index = 0;
+        for (String s : entries) {
+            if (index >= 6) {
                 String temp = s.split(">")[1];
-                names += (temp.substring(0 , temp.length() - 3) + "\n");
+                names += (temp.substring(0, temp.length() - 3) + "\n");
             }
             index++;
         }

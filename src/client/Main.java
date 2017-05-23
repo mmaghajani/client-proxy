@@ -17,7 +17,7 @@ public class Main {
 
         StartPage.getInstance().printToBoard("Creating Client Socket!\n");
         try {
-            Socket clientSocket = new Socket("127.0.0.1", 8000);
+            Socket clientSocket = new Socket("192.168.1.5", 8000);
             StartPage.getInstance().printToBoard("Connected To Server\n");
             UserPI.getInstance().setConnection(clientSocket);
         } catch (IOException e) {

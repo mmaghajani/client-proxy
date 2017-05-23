@@ -22,17 +22,21 @@ public class UserDTP implements Runnable {
                     new InputStreamReader(dataConnection.getInputStream()));
             boolean loop = true;
             StringBuilder sb = new StringBuilder();
+            System.out.println("salamal");
             while (loop) {
                 if (inFromServerDTP.ready()) {
                     int i = 0;
                     while (i != -1) {
                         i = inFromServerDTP.read();
+                        System.out.print(i);
                         sb.append((char) i);
                     }
                     loop = false;
                 }
             }
+            dataConnection.close();
             StartPage.getInstance().printToBoard(sb.toString());
+            welcomeSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

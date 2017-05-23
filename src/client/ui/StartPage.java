@@ -4,6 +4,7 @@ package client.ui; /**
 
 import client.Constants;
 import client.GraphicHandler;
+import client.UserPI;
 import client.customView.*;
 
 import javax.swing.*;
@@ -19,11 +20,11 @@ import java.awt.event.ActionListener;
 public class StartPage extends JFrame {
 
     private int width = GraphicHandler.getInstance().getWidthScreen()*2 / 3;
-    private int height = GraphicHandler.getInstance().getHeightScreen()*3 / 4;
+    private int height = GraphicHandler.getInstance().getHeightScreen()*4 / 5;
     private MyLabel titleLbl;
-    private MyTextField idField;
-    private MyTextField passwordField;
-    private JButton signInBtn;
+    private MyTextField command;
+    private MyTextField board;
+    private JButton execute;
     private JToolBar toolBar;
 
     /**
@@ -36,14 +37,20 @@ public class StartPage extends JFrame {
     private final int titleFontSize = 35;
     private final int mainPanelX = 0;
     private final int mainPanelY = heightOfTitleBar;
-    private final int heightOfMainPanel = height * 9 / 10;
+    private final int heightOfMainPanel = height * 8 / 10;
     private final int widthOfMainPanel = width;
     private final int toolBarX = 0;
-    private final int toolBarY = heightOfTitleBar + heightOfMainPanel * 95/100 ;
+    private final int toolBarY = heightOfTitleBar + heightOfMainPanel ;
     private final int heightOfToolBar = height - (heightOfMainPanel + heightOfTitleBar)*95/100;
     private final int widthOfToolBar = width;
 
-    public StartPage() {
+    private static StartPage ourInstance = new StartPage();
+
+    public static StartPage getInstance() {
+        return ourInstance;
+    }
+
+    private StartPage() {
         super();
 
         initialize();
@@ -59,19 +66,28 @@ public class StartPage extends JFrame {
         setVisible(true);
     }
 
+    public void printToBoard(String s){
+        board.setText(board.getText() + "\n" + s);
+    }
+
     private void setMainPanel() {
-        idField = new MyTextField("Command", Constants.buttonJPGPath);
-        idField.setSize(width * 5/ 6, height / 10);
-        idField.setLocation(widthOfMainPanel / 2 - idField.getWidth() / 2, mainPanelY + heightOfMainPanel / 14);
+        command = new MyTextField("Command", Constants.buttonJPGPath);
+        command.setSize(width * 5/ 6, height / 10);
+        command.setLocation(widthOfMainPanel / 2 - command.getWidth() / 2, mainPanelY + heightOfMainPanel / 14);
 
-        passwordField = new MyTextField("", Constants.buttonJPGPath);
-        passwordField.setEditable(false);
-        passwordField.setSize(width * 5 / 6, height * 3 / 4);
-        passwordField.setLocation(widthOfMainPanel / 2 - idField.getWidth() / 2, mainPanelY + heightOfMainPanel / 8);
+        board = new MyTextField("" , Constants.buttonJPGPath);
+        board.setEditable(false);
+        board.setSize(width * 5 / 6, height * 7 / 10);
+        board.setLocation(widthOfMainPanel / 2 - command.getWidth() / 2, mainPanelY + heightOfMainPanel / 8);
 
-        signInBtn = new MyButton("execute", Constants.buttonJPGPath);
-        signInBtn.setSize(passwordField.getWidth() / 5, heightOfMainPanel / 12);
-        signInBtn.setLocation(widthOfMainPanel / 2 - signInBtn.getWidth() / 2, mainPanelY + heightOfMainPanel * 20 / 21);
+        execute = new MyButton("execute", Constants.buttonJPGPath);
+        execute.setSize(board.getWidth() / 5, heightOfMainPanel / 12);
+        execute.setEnabled(true);
+        execute.setLocation(widthOfMainPanel / 2 - execute.getWidth() / 2, mainPanelY + heightOfMainPanel );
+        execute.addActionListener(e -> {
+            System.out.println("salam");
+           // UserPI.getInstance().runCommand(command.getText() + "\n");
+        });
     }
 
     private void initialize() {
@@ -138,9 +154,9 @@ public class StartPage extends JFrame {
     private void AddComponentsToFrame() {
         getContentPane().add(titleLbl);
         getContentPane().add(toolBar);
-        getContentPane().add(idField);
-        getContentPane().add(passwordField);
-        getContentPane().add(signInBtn);
+        getContentPane().add(command);
+        getContentPane().add(board);
+        getContentPane().add(execute);
     }
 
     /**
@@ -161,8 +177,8 @@ public class StartPage extends JFrame {
     private void componentRepaint() {
         titleLbl.repaint();
         toolBar.getComponent(0).repaint();
-        signInBtn.repaint();
-        idField.repaint();
-        passwordField.repaint();
+        execute.repaint();
+        command.repaint();
+        board.repaint();
     }
 }

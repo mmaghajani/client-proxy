@@ -23,7 +23,7 @@ public class StartPage extends JFrame {
     private int height = GraphicHandler.getInstance().getHeightScreen()*4 / 5;
     private MyLabel titleLbl;
     private MyTextField command;
-    private MyTextField board;
+    private MyTextArea board;
     private JButton execute;
     private JToolBar toolBar;
 
@@ -75,7 +75,7 @@ public class StartPage extends JFrame {
         command.setSize(width * 5/ 6, height / 10);
         command.setLocation(widthOfMainPanel / 2 - command.getWidth() / 2, mainPanelY + heightOfMainPanel / 14);
 
-        board = new MyTextField("" , Constants.buttonJPGPath);
+        board = new MyTextArea("" , Constants.buttonJPGPath);
         board.setEditable(false);
         board.setSize(width * 5 / 6, height * 7 / 10);
         board.setLocation(widthOfMainPanel / 2 - command.getWidth() / 2, mainPanelY + heightOfMainPanel / 8);
@@ -85,8 +85,7 @@ public class StartPage extends JFrame {
         execute.setEnabled(true);
         execute.setLocation(widthOfMainPanel / 2 - execute.getWidth() / 2, mainPanelY + heightOfMainPanel );
         execute.addActionListener(e -> {
-            System.out.println("salam");
-           // UserPI.getInstance().runCommand(command.getText() + "\n");
+            UserPI.getInstance().runCommand(command.getText() + "\n");
         });
     }
 
@@ -152,11 +151,11 @@ public class StartPage extends JFrame {
     }
 
     private void AddComponentsToFrame() {
+        getContentPane().add(execute);
         getContentPane().add(titleLbl);
         getContentPane().add(toolBar);
         getContentPane().add(command);
         getContentPane().add(board);
-        getContentPane().add(execute);
     }
 
     /**

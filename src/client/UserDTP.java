@@ -30,7 +30,36 @@ public class UserDTP implements Runnable {
         }
     }
 
-    public void accept(){
+    public String getText(){
+        Socket dataConnection = null;
+        try {
+            dataConnection = welcomeSocket.accept();
+            BufferedReader inFromServerDTP = new BufferedReader(
+                    new InputStreamReader(dataConnection.getInputStream()));
+            boolean loop = true;
+            StringBuilder sb = new StringBuilder();
+            System.out.println("salamal");
+            while (loop) {
+                if (inFromServerDTP.ready()) {
+                    int i = 0;
+                    while (i != -1) {
+                        i = inFromServerDTP.read();
+                        System.out.print(i);
+                        sb.append((char) i);
+                    }
+                    loop = false;
+                }
+            }
+            dataConnection.close();
+            welcomeSocket.close();
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void getFile(){
         Socket dataConnection = null;
         try {
             dataConnection = welcomeSocket.accept();

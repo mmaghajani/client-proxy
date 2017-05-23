@@ -69,7 +69,9 @@ public class UserPI {
                         StartPage.getInstance().printToBoard(reply);
                         String LISTStatus = reply.split("\\s")[0];
                         if( LISTStatus.equals("200")){
-                            DTP.accept();
+                            String response = DTP.getText();
+                            String list = getList(response);
+                            StartPage.getInstance().printToBoard("Name of Files : " + "\n" + list);
                         }else
                             DTP.close();
                     }else{
@@ -92,6 +94,20 @@ public class UserPI {
             e.printStackTrace();
         }
 
+    }
+
+    private String getList(String response){
+        String[] entries = response.split("href");
+        String names = "";
+        int index = 0 ;
+        for( String s : entries ){
+            if( index >= 6 ){
+                String temp = s.split(">")[1];
+                names += (temp.substring(0 , temp.length() - 3) + "\n");
+            }
+            index++;
+        }
+        return names;
     }
 
 }

@@ -25,6 +25,7 @@ public class StartPage extends JFrame {
     private MyTextField command;
     private MyTextArea board;
     private JButton execute;
+    private JScrollPane pane;
     private JToolBar toolBar;
 
     /**
@@ -78,12 +79,16 @@ public class StartPage extends JFrame {
         board = new MyTextArea("" , Constants.buttonJPGPath);
         board.setEditable(false);
         board.setSize(width * 5 / 6, height * 7 / 10);
-        board.setLocation(widthOfMainPanel / 2 - command.getWidth() / 2, mainPanelY + heightOfMainPanel / 8);
+        board.setLocation(0, 0);
+
+        pane = new JScrollPane(board,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pane.setSize(width * 5 / 6, height * 7 / 10);
+        pane.setLocation(widthOfMainPanel / 2 - command.getWidth() / 2, mainPanelY + command.getHeight() + heightOfMainPanel / 15);
 
         execute = new MyButton("execute", Constants.buttonJPGPath);
         execute.setSize(board.getWidth() / 5, heightOfMainPanel / 12);
         execute.setEnabled(true);
-        execute.setLocation(widthOfMainPanel / 2 - execute.getWidth() / 2, mainPanelY + heightOfMainPanel );
+        execute.setLocation(widthOfMainPanel / 2 - execute.getWidth() / 2, mainPanelY + heightOfMainPanel * 16/15 );
         execute.addActionListener(e -> {
             UserPI.getInstance().runCommand(command.getText() + "\n");
         });
@@ -156,7 +161,7 @@ public class StartPage extends JFrame {
         getContentPane().add(titleLbl);
         getContentPane().add(toolBar);
         getContentPane().add(command);
-        getContentPane().add(board);
+        getContentPane().add(pane);
     }
 
     /**

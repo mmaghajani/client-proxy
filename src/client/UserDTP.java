@@ -17,7 +17,23 @@ public class UserDTP implements Runnable {
     public void run() {
         try {
             welcomeSocket = new ServerSocket(6000);
-            Socket dataConnection = welcomeSocket.accept();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void close(){
+        try {
+            welcomeSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void accept(){
+        Socket dataConnection = null;
+        try {
+            dataConnection = welcomeSocket.accept();
             BufferedReader inFromServerDTP = new BufferedReader(
                     new InputStreamReader(dataConnection.getInputStream()));
             boolean loop = true;
@@ -36,14 +52,6 @@ public class UserDTP implements Runnable {
             }
             dataConnection.close();
             StartPage.getInstance().printToBoard(sb.toString());
-            welcomeSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void close(){
-        try {
             welcomeSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

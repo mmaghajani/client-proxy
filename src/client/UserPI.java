@@ -68,9 +68,10 @@ public class UserPI {
                         System.out.println(reply);
                         StartPage.getInstance().printToBoard(reply);
                         String LISTStatus = reply.split("\\s")[0];
-                        if( !LISTStatus.equals("200")){
+                        if( LISTStatus.equals("200")){
+                            DTP.accept();
+                        }else
                             DTP.close();
-                        }
                     }else{
                         StartPage.getInstance().printToBoard(reply);
                     }

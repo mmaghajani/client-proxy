@@ -79,6 +79,26 @@ public class UserPI {
                     }
                     break;
                 case "RETR" :
+                    outToServer.writeBytes("PORT 6000\n");
+                    reply = inFromServer.readLine();
+                    status = reply.split("\\s")[0];
+                    String nameOfFile = clientSentence.split("\\s")[1];
+                    System.out.println(status);
+                    if( status.equals("200")){
+                        UserDTP DTP = new UserDTP();
+                        new Thread(DTP).start();
+                        outToServer.writeBytes(clientSentence);
+                        reply = inFromServer.readLine();
+                        System.out.println(reply);
+                        StartPage.getInstance().printToBoard(reply);
+                        String RETRStatus = reply.split("\\s")[0];
+                        if( RETRStatus.equals("200")){
+                            DTP.getFile(nameOfFile);
+                        }else
+                            DTP.close();
+                    }else{
+                        StartPage.getInstance().printToBoard(reply);
+                    }
                     break;
                 case "RMD" :
                     outToServer.writeBytes(clientSentence);

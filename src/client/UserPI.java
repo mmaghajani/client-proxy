@@ -81,8 +81,14 @@ public class UserPI {
                 case "RETR" :
                     break;
                 case "RMD" :
+                    outToServer.writeBytes(clientSentence);
+                    reply = inFromServer.readLine();
+                    StartPage.getInstance().printToBoard(reply);
                     break;
                 case "DELE" :
+                    outToServer.writeBytes(clientSentence);
+                    reply = inFromServer.readLine();
+                    StartPage.getInstance().printToBoard(reply);
                     break;
                 case "QUIT" :
                     outToServer.writeBytes(clientSentence);

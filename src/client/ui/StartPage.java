@@ -66,7 +66,7 @@ public class StartPage extends JFrame {
         setVisible(true);
     }
 
-    public void printToBoard(String s){
+    public synchronized void printToBoard(String s){
         board.setText(board.getText() + "\n" + s);
     }
 
@@ -138,6 +138,7 @@ public class StartPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
+                UserPI.getInstance().runCommand("QUIT");
                 dispose();
             }
         });
